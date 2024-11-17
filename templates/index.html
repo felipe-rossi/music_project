@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma nova música a cada dia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
+    <script>
+
+        function animacaoCarregando(){
+            var inputGeneroMusical = document.getElementById("txtGenero").value
+            var inputQuantidadeMusica = document.getElementById("inputQuantidadeMusica").value
+            var btnProcurar = document.getElementById("btnProcurar");
+
+            if(inputGeneroMusical != "" && inputQuantidadeMusica > 0){
+                btnProcurar.style.display = "none";
+                var divLoading = document.getElementById("loading");
+
+                var divSpinner = document.createElement("div");
+                divSpinner.setAttribute('id', 'spinner');
+                divSpinner.setAttribute('class', 'container position-relative text-center');
+
+                divLoading.appendChild(divSpinner);
+
+            }
+        
+           
+        }
+
+        function esconderAnimacao(){
+            var videosIds = {{ videos_ids_escolhido_aletoriamente | tojson }};
+            var divSpiner = document.getElementById("spinner");
+            var btnProcurar = document.getElementById("btnProcurar");
+
+
+            if(videosIds.lenght > 0){
+                divSpiner.remove();
+                tnProcurar.style.display = "block"
+            }
+
+        }
+
+    </script>
+</head>
+<body>
+    <div id="main" class="container position-absolute top-50 start-50 translate-middle h-auto">
+        <h1 class="h1 text-center mb-4">Diferrent Song Everyday</h1>
+        <h2 class="h2 text-center">ESCOLHA UM GÊNERO MUSICAL E APROVEITE</h2>
+        <div id="form" class="container p-4 h-100">
+                <div class="container">
+                    <h3 class="h3 text-center">O QUE É A DIFERENT SONG EVERYDAY</h3>
+                    <p class="text-center mt-2 fs-5">Com base nas suas escolhas de gênero musical, o site irá selecionar e gerar uma música aleatória dentro do gênero que você escolheu. 
+                    Isso significa que, ao definir o seu estilo musical favorito, o sistema fará uma seleção automática e apresentará uma música que se encaixa nas suas preferências. 
+                    É uma maneira de descobrir novas músicas e explorar ainda mais o seu gênero favorito de forma dinâmica e personalizada!
+                    </p>
+                </div>
+                <form method="POST" action="/" >
+                    <div class="container mt-4 p-4">
+                        <div class="mb-3">
+                            <label for="txtGenero" class="form-label fs-5">Gênero Musical:</label>
+                            <input class="form-control form-control-lg" type="text" name="txtGenero" id="txtGenero" required="" placeholder="Digite um gênero musical...">
+                            
+                        </div>   
+
+                        <div class="mb-3">
+                            <input class="form-control form-control-lg" type="number" name="inputQuantidadeMusica" id="inputQuantidadeMusica" required="" placeholder="Digite a quantidade de músicas geradas(1-4)...">
+                        </div>
+                        <button id="btnProcurar" type="submit" class="btn btn-lg" onclick="animacaoCarregando()">Procurar</button>
+                    </div>
+
+                    <div id="loading" class="container"></div>
+                
+                </form>
+                
+            <div id="videos" class="embed-responsive embed-responsive-16by9 text-center">
+                {% if videos_ids_escolhido_aletoriamente %}
+                <h4 class="h4">Aqui estão {{quantidade_musicas}} musica(s) do gênero musical {{genero_musical}}</h4>
+                    {% for video_id in videos_ids_escolhido_aletoriamente %}
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{video_id}}" frameborder="0" allowfullscreen></iframe>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% if mensagem_alert %}
+                <script>window.alert("{{mensagem_alert}}")</script>
+            {% endif %}
+        </div>
+    </div>
+        
+    <div class="card-footer text-body-secondary position-absolute top-100 start-50 translate-middle position-fixed mb-4">
+        <footer>
+            <p class="text-center" style="color: white;">© 2024 Felipe Rossi</p>
+        </footer>
+    </div>
+    
+</body>
+</html>
