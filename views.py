@@ -7,7 +7,7 @@ todos_generos = ['rock alternativo','rock','afrobeats','arrochadeira','avant-pop
                  'cumbia villera','dolewave','downtempo','dream trance','eletrobrega','eurotrance','eurobeat','flamenco house','grupero','hip hop chines','idilio',
                  'italodance','japanoise','kaseko','Konsrock','kuduro','maloya','mantinada','martial industrial','memphis rap','moombahton','murder ballad','musica ambiente'
                  ,'circense','mizrahi','pop arabe','profana','sertaneja','taoista','utilitária','novo flamenco','nu-disco','pastoral','pastoril' ,'polca','pop progressivo',
-                 'rumba catalana','seapunk','sovietwave','vallenato','vaporwave','xuc','zukuma', 'trap', 'forro', 'metalcore', 'rap anime', 'sertanejo', 'nu-metal', 'funk', 'funk brasileiro']
+                 'rumba catalana','seapunk','sovietwave','vallenato','vaporwave','xuc','zukuma', 'trap', 'trap brasileiro', 'forro', 'metalcore', 'rap anime', 'sertanejo', 'nu-metal', 'funk', 'funk brasileiro']
 
 
 @app.route("/", methods=['GET', 'POST'])
