@@ -34,6 +34,7 @@ def buscarMusicaAleatoria(genero_musical, quantidade_musica):
         }
   
         resposta = request.get(url_base, params=parametros)
+        print(resposta.json())
         
         if resposta.status_code == 200:
             

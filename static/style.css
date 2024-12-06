@@ -22,8 +22,16 @@ h1, h2{
     color: rgb(116, 105, 175);
 }
 
-#form{
+#form, #login{
     background-color: rgba(41, 2, 39, 0.5);
+}
+
+#modalContent{
+    background-color: rgba(41, 2, 39, 1);
+}
+
+#modalLabel{
+    color: white;
 }
 
 #spinner{
@@ -39,5 +47,12 @@ h1, h2{
 @keyframes spin{
     to{
         transform: rotate(360deg);
+    }
+}
+
+@media(max-width: 600px){
+    #login{
+        height: 100%;
+        width: 80%;
     }
 }

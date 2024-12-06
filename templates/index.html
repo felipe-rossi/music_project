@@ -3,17 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Cross-Origin-Opener-Policy" content="same-origin">
+    <meta name="SECURE_CROSS_ORIGIN_OPENER_POLICY" content="unsafe-none">
     <title>Uma nova música a cada dia</title>
+    <link type="image/png" sizes="32x32" rel="icon" href="../static/imagens/icons8-música-32.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/style.css">
+   
+</head>
+<body>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalLogin" tabindex="-1" aria-hidden="true" >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" id="modalContent">
+                <div class="modal-header">
+                    <h2 class="modal-title h2" id="modalLabel">Vídeo indisponível</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: white;"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-break lh-1 fs-5">
+                        Alguns vídeos não serão exibidos por causa de maioridade de idade, 
+                        então para que possa visualizar o vídeo clique em "Assitir no Youtube".
+                    </p>
+                    
+                    <div class="container text-center">
+                        <img class="img-thumbnail" src="../static/imagens/video_indisponivel.png">
+                        <img class="img-thumbnail" src="../static/imagens/video_indisponivel2.png">
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">OK, Entendi</button>
+                    
+                
+                <!-- <div id="g_id_onload"
+                        data-client_id="604910722394-i56lkf55484oif5lg5l8ofom4v5g7qbr.apps.googleusercontent.com"
+                        data-context="signin"
+                        data-ux_mode="popup"
+                        data-callback="onSignIn"
+                        data-auto_prompt="false">
+                </div>
+
+                <div class="g_id_signin"
+                        data-type="standard"
+                        data-shape="pill"
+                        data-theme="outline"
+                        data-text="signin_with"
+                        data-size="large"
+                        data-locale="pt-BR"
+                        data-logo_alignment="left">
+                </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="main" class="container position-absolute top-50 start-50 translate-middle h-auto">
+        <h1 class="h1 text-center mb-4">Differrent Song Everyday</h1>
+        <h2 class="h2 text-center">ESCOLHA UM GÊNERO MUSICAL E APROVEITE</h2>
+        <div id="form" class="container p-4 h-100">
+                <div class="container">
+                    <h3 class="h3 text-center">O QUE É A DIFERENT SONG EVERYDAY</h3>
+                    <p class="text-center mt-2 fs-5">Com base nas suas escolhas de gênero musical, o site irá selecionar e gerar 4 músicas aleatória dentro do gênero que você escolheu. 
+                    Isso significa que, ao definir o seu estilo musical favorito, o sistema fará uma seleção automática e apresentará uma música que se encaixa nas suas preferências. 
+                    É uma maneira de descobrir novas músicas e explorar ainda mais o seu gênero favorito de forma dinâmica e personalizada!
+                    </p>
+                </div>
+                <form method="POST" action="/" >
+                    <div class="container mt-4 p-4">
+                        <div class="mb-3">
+                            <label for="txtGenero" class="form-label fs-5">Gênero Musical:</label>
+                            <input class="form-control form-control-lg" type="text" name="txtGenero" id="txtGenero" required="" placeholder="Digite um gênero musical...">
+                            
+                        </div>   
+
+                        <button id="btnProcurar" type="submit" class="btn btn-lg" onclick="animacaoCarregando()">Procurar</button>
+                    </div>
+
+                    <div id="loading" class="container"></div>
+                
+                </form>
+                
+            <div id="videos" class="embed-responsive embed-responsive-16by9 text-center">
+                {% if videos_ids_escolhido_aletoriamente %}
+                <h4 class="h4">Aqui estão 4 musicas do gênero musical {{genero_musical}}</h4>
+                    {% for video_id in videos_ids_escolhido_aletoriamente %}
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{video_id}}" frameborder="0" allowfullscreen></iframe>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% if mensagem_alert %}
+                <script>window.alert("{{mensagem_alert}}")</script>
+            {% endif %}
+        </div>
+    </div>
+        
+    <div class="card-footer position-absolute top-100 start-50 translate-middle mb-4">
+        <!-- <a class="link-light" href="https://www.flaticon.com/br/icones-gratis/proximo" title="próximo ícones">Próximo ícones criados por kliwir art - Flaticon</a> -->
+        <footer>
+            <p class="text-center" style="color: white;">© 2024 Felipe Rossi</p>
+        </footer>
+    </div>
+    
+
+    <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
     <script>
+
+        window.onload = function() {
+            if (!sessionStorage.getItem('modalExibido')) {
+                const modalLogin = new bootstrap.Modal(document.getElementById('modalLogin')); // Inicializa o modal
+                modalLogin.show();
+
+                const txtVideos = document.getElementById('txtVideos');
+                document.getElementById('modalLogin').addEventListener('shown.bs.modal', () => {
+                    if (txtVideos) {
+                        txtVideos.focus();
+                    }
+                });
+
+                // Armazena no sessionStorage que o modal foi exibido
+                sessionStorage.setItem('modalExibido', 'true');
+            }
+        };
+
+
+        /*function onSignIn(googleUser){
+            var modalLogin = new bootstrap.Modal(document.getElementById('modalLogin'));
+            modalLogin.hide();
+
+            var modalElemento = document.getElementById('modalLogin')
+            modalElemento.addEventListener('hidden.bs.modal', () =>{
+                var user = googleUser.getBasicProfile();
+                var nome = user.getName();
+                console.log("Nome: " + nome)
+            })
+
+            
+        }*/
 
         function animacaoCarregando(){
             var inputGeneroMusical = document.getElementById("txtGenero").value
-            var inputQuantidadeMusica = document.getElementById("inputQuantidadeMusica").value
             var btnProcurar = document.getElementById("btnProcurar");
 
-            if(inputGeneroMusical != "" && inputQuantidadeMusica > 0){
+            if(inputGeneroMusical != ""){
                 btnProcurar.style.display = "none";
                 var divLoading = document.getElementById("loading");
 
@@ -36,62 +173,11 @@
 
             if(videosIds.lenght > 0){
                 divSpiner.remove();
-                tnProcurar.style.display = "block"
+                btnProcurar.style.display = "block"
             }
 
         }
 
     </script>
-</head>
-<body>
-    <div id="main" class="container position-absolute top-50 start-50 translate-middle h-auto">
-        <h1 class="h1 text-center mb-4">Differrent Song Everyday</h1>
-        <h2 class="h2 text-center">ESCOLHA UM GÊNERO MUSICAL E APROVEITE</h2>
-        <div id="form" class="container p-4 h-100">
-                <div class="container">
-                    <h3 class="h3 text-center">O QUE É A DIFERENT SONG EVERYDAY</h3>
-                    <p class="text-center mt-2 fs-5">Com base nas suas escolhas de gênero musical, o site irá selecionar e gerar uma música aleatória dentro do gênero que você escolheu. 
-                    Isso significa que, ao definir o seu estilo musical favorito, o sistema fará uma seleção automática e apresentará uma música que se encaixa nas suas preferências. 
-                    É uma maneira de descobrir novas músicas e explorar ainda mais o seu gênero favorito de forma dinâmica e personalizada!
-                    </p>
-                </div>
-                <form method="POST" action="/" >
-                    <div class="container mt-4 p-4">
-                        <div class="mb-3">
-                            <label for="txtGenero" class="form-label fs-5">Gênero Musical:</label>
-                            <input class="form-control form-control-lg" type="text" name="txtGenero" id="txtGenero" required="" placeholder="Digite um gênero musical...">
-                            
-                        </div>   
-
-                        <div class="mb-3">
-                            <input class="form-control form-control-lg" type="number" name="inputQuantidadeMusica" id="inputQuantidadeMusica" required="" placeholder="Digite a quantidade de músicas geradas(1-4)...">
-                        </div>
-                        <button id="btnProcurar" type="submit" class="btn btn-lg" onclick="animacaoCarregando()">Procurar</button>
-                    </div>
-
-                    <div id="loading" class="container"></div>
-                
-                </form>
-                
-            <div id="videos" class="embed-responsive embed-responsive-16by9 text-center">
-                {% if videos_ids_escolhido_aletoriamente %}
-                <h4 class="h4">Aqui estão {{quantidade_musicas}} musica(s) do gênero musical {{genero_musical}}</h4>
-                    {% for video_id in videos_ids_escolhido_aletoriamente %}
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{video_id}}" frameborder="0" allowfullscreen></iframe>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            {% if mensagem_alert %}
-                <script>window.alert("{{mensagem_alert}}")</script>
-            {% endif %}
-        </div>
-    </div>
-        
-    <div class="card-footer text-body-secondary position-absolute top-100 start-50 translate-middle position-fixed mb-4">
-        <footer>
-            <p class="text-center" style="color: white;">© 2024 Felipe Rossi</p>
-        </footer>
-    </div>
-    
 </body>
 </html>
