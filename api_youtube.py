@@ -1,11 +1,12 @@
 import requests as request
 import random
+from datetime import datetime
 
-chave_api = "AIzaSyDaRYk2Tl3AqEjYsoXUOZzTw3u7wtKn5mU"
+chave_api = "AIzaSyBIAl21tdl_u9h5vVvrJlfGJhBZNudfQaw" #AIzaSyDaRYk2Tl3AqEjYsoXUOZzTw3u7wtKn5mU #AIzaSyBIAl21tdl_u9h5vVvrJlfGJhBZNudfQaw
 url_base = "https://www.googleapis.com/youtube/v3/search"
 todos_ids_gerados = []
 videos_ids_escolhido_aletoriamente = []
-historico_ids = []
+todos_titulos_videos = []
 i = 0
 nextPage = None
 
@@ -14,10 +15,12 @@ def buscarMusicaAleatoria(genero_musical):
     global i
     global todos_ids_gerado
     global videos_ids_escolhido_aletoriamente
+    global todos_titulos_videos
     global nextPage
     
     if len(videos_ids_escolhido_aletoriamente) > 0:
         videos_ids_escolhido_aletoriamente.clear()
+        todos_titulos_videos.clear()
     
     todos_ids_gerados.clear()
     
@@ -45,7 +48,7 @@ def buscarMusicaAleatoria(genero_musical):
         resposta = request.get(url_base, params=parametros)
         print(resposta.status_code)
         print(resposta.json().get("", []))
-        
+      
         if resposta.status_code == 200:
             
             videos = resposta.json().get("items", [])
@@ -55,8 +58,15 @@ def buscarMusicaAleatoria(genero_musical):
                 if video["snippet"].get("liveBroadcastContent") != "upcoming":        
                     todos_ids_gerados.append(video.get("id", {}).get("videoId"))
     
-    print(f"Quantidade de ids_gerados: {len(todos_ids_gerados)}")
-    for j in range(0, 4):
-        videos_ids_escolhido_aletoriamente.append(random.choice(todos_ids_gerados))
-    
-    return videos_ids_escolhido_aletoriamente 
+            print(f"Quantidade de ids_gerados: {len(todos_ids_gerados)}")
+
+            for j in range(0, 8):
+                videos_ids_escolhido_aletoriamente.append(random.choice(todos_ids_gerados))
+                for video in videos:
+                    if videos_ids_escolhido_aletoriamente[j] == video.get("id", {}).get("videoId"):
+                        todos_titulos_videos.append(video["snippet"].get("title"))
+        
+    data_e_hora_atual = datetime.now()
+    print("Todos os títulos: ",todos_titulos_videos)
+    print("Todos os ids escolhidos aleatóriamente: ",videos_ids_escolhido_aletoriamente)
+    return videos_ids_escolhido_aletoriamente,todos_titulos_videos,data_e_hora_atual

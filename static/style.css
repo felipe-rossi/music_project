@@ -1,4 +1,4 @@
-body{
+html,body{
     background-image: url("../static/imagens/background_edit.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -6,32 +6,42 @@ body{
     font-family: 'Telegraf';
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     color: white;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-position: center;
 }
 
+.footer {
+  background: transparent;
+}
 
-#btnProcurar, #txtGenero, #inputQuantidadeMusica{
-    background-color: #858BA9; 
+#btnProcurar{
+    background-color: #2e303a;
     color: white;
 } 
 #btnProcurar:hover{
-    background-color: #585c6e; 
-}
-
-h1, h2{
-    font-family: 'Telegraf';
-    color: rgb(116, 105, 175);
-}
-
-#form, #login{
-    background-color: rgba(41, 2, 39, 0.5);
-}
-
-#modalContent{
-    background-color: rgba(41, 2, 39, 1);
-}
-
-#modalLabel{
+    background-color: #6d7180; 
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
     color: white;
+}
+
+#titulos{
+   animation: fadeIn 2s ease; 
+}
+
+#form{
+    animation: fadeIn 3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+}
+
+a:hover {
+  color: #9F5FFF;
+  text-decoration: underline;
+  transition: 0.3s;
 }
 
 #spinner{
@@ -43,6 +53,11 @@ h1, h2{
     animation: spin 1s linear infinite;
 }
 
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
 
 @keyframes spin{
     to{
