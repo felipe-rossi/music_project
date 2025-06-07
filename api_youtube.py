@@ -1,8 +1,13 @@
 import requests as request
 import random
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
-chave_api = "AIzaSyBIAl21tdl_u9h5vVvrJlfGJhBZNudfQaw" #AIzaSyDaRYk2Tl3AqEjYsoXUOZzTw3u7wtKn5mU #AIzaSyBIAl21tdl_u9h5vVvrJlfGJhBZNudfQaw
+
+load_dotenv()
+
+chave_api = os.getenv("API_KEY") 
 url_base = "https://www.googleapis.com/youtube/v3/search"
 todos_ids_gerados = []
 videos_ids_escolhido_aletoriamente = []
