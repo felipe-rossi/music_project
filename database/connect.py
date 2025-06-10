@@ -9,11 +9,11 @@ class Connect:
         try:
             connect = psycopg2.connect(
                 user="postgres",
-                password=os.getenv("DB_PASSWORD"),
+                password=os.getenv("DB_PASSWORD"), # type: ignore
                 host="127.0.0.1",
                 port=5432,
                 database="users")
-            print("Banco de dados conectado com sucesso !")
+           
             return connect
         
         except Error as e:

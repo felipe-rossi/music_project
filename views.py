@@ -1,8 +1,8 @@
 from app import app
 from flask import render_template
 from flask import request
-from api_youtube import buscarMusicaAleatoria
-from unidecode import unidecode
+from api.api_youtube import buscarMusicaAleatoria
+from unidecode import unidecode 
 
 
 todos_generos = ['rock alternativo','rock','afrobeats','arrochadeira','avant-pop','axé','black MIDI','bubblegum dance','bubu','chacarera','champeta','chillwave','cloud rap',
@@ -27,7 +27,7 @@ todos_generos = ['rock alternativo','rock','afrobeats','arrochadeira','avant-pop
 @app.route("/", methods=['GET', 'POST'])
 def homePage():
 
-    ip_usuario = request.remote_addr
+    endereco_ip = request.remote_addr
     
     videos_ids_escolhido_aletoriamente = []
     genero_musical = ""
@@ -36,25 +36,30 @@ def homePage():
     videos_ids_com_titulo = []
     
     if request.method == "POST":
-        genero_musical = request.form.get('txtGenero', type=str)
-        genero_musical = unidecode(genero_musical).lower()     # type: ignore
+        genero_musical_raw = request.form.get('txtGenero', type=str)
+        genero_musical = unidecode(genero_musical_raw).lower() if genero_musical_raw else ""   # type: ignore
         
-        if genero_musical not in todos_generos or genero_musical == "":
+        if not genero_musical or genero_musical not in todos_generos:
             mensagem_alert = "Verifique os campos digitados por favor e tente novamente!"
             genero_musical = None
             
         else:
-            genero_musical = unidecode(genero_musical).lower()
-            videos_ids_escolhido_aletoriamente, todos_titulos_videos, data_e_hora_atual  = buscarMusicaAleatoria(genero_musical) 
-            videos_ids_com_titulo = zip(videos_ids_escolhido_aletoriamente, todos_titulos_videos)
+            try:
+                videos_ids_escolhido_aletoriamente, todos_titulos_videos, data_e_hora_atual  = buscarMusicaAleatoria(genero_musical, endereco_ip) 
+                videos_ids_com_titulo = zip(videos_ids_escolhido_aletoriamente, todos_titulos_videos)
+            except Exception as e:
+                mensagem_alert = "Erro ao buscar músicas. Tente novamente mais tarde."
+                print("Erro na busca:", e)
 
-        print("Genero: ", genero_musical)            
+        print("Genero: ", genero_musical)     
+
+
         
     return render_template("index.html", 
                            genero_musical=genero_musical, 
                            mensagem_alert=mensagem_alert,
                            videos_ids_com_titulo=videos_ids_com_titulo,
-                           ip_usuario=ip_usuario or "",
+                           endereco_ip=endereco_ip or "",
                            data_e_hora_atual=data_e_hora_atual or "",
                            videos_ids_escolhido_aletoriamente=videos_ids_escolhido_aletoriamente or [])
 

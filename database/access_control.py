@@ -1,8 +1,7 @@
-from connect import Connect
+from database.connect import Connect
 from psycopg2 import Error
 
-
-def main(endereco_ip, data_e_hora, data_e_hora_liberado):
+def realizarCadastroDoIp(endereco_ip, data_e_hora, data_e_hora_liberado):
     connect = Connect()
     connection = connect.conn()
 
@@ -11,6 +10,7 @@ def main(endereco_ip, data_e_hora, data_e_hora_liberado):
 
     if cursor.fetchone():
         print(f"Já existe o endereço {endereco_ip} na tabela")
+        return True
     else:
         print("Ip não cadastrado, inserindo no banco de dados")
         try:
@@ -22,4 +22,18 @@ def main(endereco_ip, data_e_hora, data_e_hora_liberado):
 
     connect.closeConn(connection)
 
-main("166.3.4.5","2025-06-07 14:30:00", "2025-06-08 14:30:00")
+def cadastrarNovaData(endereco_ip, data_e_hora, data_e_hora_liberado):
+    connect = Connect()
+    connection = connect.conn()
+    cursor = connection.cursor()  # type: ignore
+
+    try:
+        cursor.execute("UPDATE access SET data_e_hora=%s, data_e_hora_liberado=%s WHERE endereco_ip=%s",(data_e_hora, data_e_hora_liberado, endereco_ip,))
+        connection.commit() # type: ignore
+        print("Dados atualizados com sucesso")
+    except Error as e:
+        print(f"Erro ao tentar atualizar os dados: {e}")
+
+    connect.closeConn(connection)
+
+#def retonar
