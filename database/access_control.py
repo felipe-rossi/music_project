@@ -1,7 +1,7 @@
 from database.connect import Connect
 from psycopg2 import Error
 
-def realizarCadastroDoIp(endereco_ip, data_e_hora, data_e_hora_liberado):
+def realizarCadastroDoIp(endereco_ip):
     connect = Connect()
     connection = connect.conn()
 
@@ -9,12 +9,11 @@ def realizarCadastroDoIp(endereco_ip, data_e_hora, data_e_hora_liberado):
     cursor.execute("SELECT 1 FROM access WHERE endereco_ip = %s", (endereco_ip,))
 
     if cursor.fetchone():
-        print(f"Já existe o endereço {endereco_ip} na tabela")
-        return True
+        print("Já existe o endereço de ip na tabela")
     else:
         print("Ip não cadastrado, inserindo no banco de dados")
         try:
-            cursor.execute("INSERT INTO access(endereco_ip, data_e_hora, data_e_hora_liberado) VALUES (%s, %s, %s)", (endereco_ip, data_e_hora, data_e_hora_liberado,))
+            cursor.execute("INSERT INTO access (endereco_ip) VALUES (%s)", (endereco_ip,))
             connection.commit() # type: ignore
             print("Dados inseridos com sucesso")
         except Error as e:
@@ -22,7 +21,7 @@ def realizarCadastroDoIp(endereco_ip, data_e_hora, data_e_hora_liberado):
 
     connect.closeConn(connection)
 
-def cadastrarNovaData(endereco_ip, data_e_hora, data_e_hora_liberado):
+def cadastrarDatasDeAcesso(endereco_ip, data_e_hora, data_e_hora_liberado):
     connect = Connect()
     connection = connect.conn()
     cursor = connection.cursor()  # type: ignore
@@ -36,4 +35,23 @@ def cadastrarNovaData(endereco_ip, data_e_hora, data_e_hora_liberado):
 
     connect.closeConn(connection)
 
-#def retonar
+def retonarDataHoraLiberada(endereco_ip):
+    data_e_hora_liberado = None
+    connect = Connect()
+    connection = connect.conn()
+    cursor = connection.cursor() # type: ignore
+    try:
+        cursor.execute("SELECT data_e_hora_liberado FROM access WHERE endereco_ip=%s",(endereco_ip,))
+        result = cursor.fetchone()
+
+        if result: 
+            data_e_hora_liberado = result[0]
+
+        connection.commit() # type: ignore
+        print(data_e_hora_liberado)
+    except Error as e:
+        print(f"Erro ao buscar data e hora liberado: {e}")
+    
+    connect.closeConn(connection)
+
+    return data_e_hora_liberado

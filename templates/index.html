@@ -14,6 +14,29 @@
 </head>
 <body class="h-auto d-flex flex-column min-vh-100">
 
+    <nav class="navbar navbar-dark bg-default fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img src="static\imagens\icons8-música-32.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"></a>
+            <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house"></i> Início</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+     
     <div id="main" class="flex-grow-1 d-flex align-items-center justify-content-center">
         <div class="container">
             <div id="titulos">
@@ -25,46 +48,25 @@
                         <h3 class="h3 text-center">O QUE É A DIFERENT SONG EVERYDAY</h3>
                         <p class="text-center mt-2 fs-5">Com base nas suas escolhas de gênero musical, o site irá selecionar e gerar 8 músicas aleatória dentro do gênero que você escolheu. 
                         Isso significa que, ao definir o seu estilo musical favorito, o sistema fará uma seleção automática e apresentará uma música que se encaixa nas suas preferências. 
-                        É uma maneira de descobrir novas músicas e explorar ainda mais o seu gênero favorito de forma dinâmica e personalizada!
+                        É uma maneira de descobrir novas músicas e explorar ainda mais o seu gênero favorito de forma dinâmica!
                         </p>
                     </div>
-                    <form method="POST" action="/" >
+                    <form method="POST" action="/resultado">
                         <div class="container mt-4 p-4">
                             <div class="mb-3">
                                 <label for="txtGenero" class="form-label fs-5">Gênero Musical:</label>
                                 <input class="form-control form-control-lg" type="text" name="txtGenero" id="txtGenero" required="" placeholder="Digite um gênero musical... ex: rock, jazz, k-pop">
-                                
-                            </div>   
-
+                            </div>  
                             <button id="btnProcurar" type="submit" class="btn btn-lg" onclick="animacaoCarregando()"><i class="fas fa-search"></i> Procurar</button>
                         </div>
-
                         <div id="loading" class="container"></div>
-                    
                     </form>
-                    
-            <div id="videos" class="list-group">
-                    {% if videos_ids_escolhido_aletoriamente %}
-                    <p class="mb-1">Aqui estão 8 musicas do gênero musical {{genero_musical}}:</p>
-                    <ol class="list-group list-group-numbered">
-                        {% for video_id,titulo in videos_ids_com_titulo %}
-                            <li><i class="fas fa-music"></i> - <a href="https://www.youtube.com/watch?v={{video_id}}" target="_blank">{{ titulo }}</a></li>
-                        {% endfor %}
-                    </ol>
-                    {% endif %}
-                </div>
+            </div>  
+        </div>
+    </div>      
                 {% if mensagem_alert %}
                     <script>window.alert("{{mensagem_alert}}")</script>
                 {% endif %}
-            </div>
-        </div>
-    </div>
-
-    <!--div class="container">
-        {% if data_e_hora_atual %}
-            <h2 class="h2">{{data_e_hora_atual}}</h2>
-        {% endif %}
-    </div!-->
 
     <footer class="footer mt-auto py-3 text-center">
         <p class="text-center" style="color: white;">© 2024 Felipe Rossi</p>
@@ -96,7 +98,13 @@
         }
 
         function esconderAnimacao(){
-            var videosIds = {{ videos_ids_escolhido_aletoriamente | tojson | safe }};
+            //var videosIds = {{ videos_ids_escolhido_aletoriamente | default([]) | tojson | safe }};
+            var videosIds = [];
+            try {
+                videosIds = JSON.parse('{{ videos_ids_escolhido_aletoriamente | default("[]") | tojson | safe }}');
+            } catch (e) {
+                console.error("Erro ao parsear videos IDs:", e);
+            }
             var divSpiner = document.getElementById("spinner");
             var btnProcurar = document.getElementById("btnProcurar");
 

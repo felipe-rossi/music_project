@@ -2,7 +2,7 @@ import requests as request
 import random, os
 from datetime import timedelta, datetime
 from dotenv import load_dotenv
-from database.access_control import realizarCadastroDoIp, cadastrarNovaData
+from database.access_control import realizarCadastroDoIp, cadastrarDatasDeAcesso
 from api.api_time_zone_db import buscarDataHoraAtual
 
 load_dotenv()
@@ -72,13 +72,10 @@ def buscarMusicaAleatoria(genero_musical, endereco_ip):
          
     data_e_hora_atual = buscarDataHoraAtual()
     data_e_hora_liberado = data_e_hora_atual + timedelta(days=1)
-    pode_cadastrar_nova_data = realizarCadastroDoIp(endereco_ip, data_e_hora_atual, data_e_hora_liberado)
-
-    if pode_cadastrar_nova_data:
-        cadastrarNovaData(endereco_ip, data_e_hora_atual, data_e_hora_liberado)
-    else:
-        print("Usuário novo, data e hora já foram cadastradas!")
+    realizarCadastroDoIp(endereco_ip)
+    cadastrarDatasDeAcesso(endereco_ip, data_e_hora_atual, data_e_hora_liberado)
+  
 
     #print("Todos os títulos: ",todos_titulos_videos)
     #print("Todos os ids escolhidos aleatóriamente: ",videos_ids_escolhido_aletoriamente)
-    return videos_ids_escolhido_aletoriamente,todos_titulos_videos,data_e_hora_atual
+    return videos_ids_escolhido_aletoriamente,todos_titulos_videos
