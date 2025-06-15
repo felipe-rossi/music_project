@@ -14,38 +14,45 @@
 </head>
 <body class="h-auto d-flex flex-column min-vh-100">
 
-    <nav class="navbar navbar-dark bg-default fixed-top">
+    <nav class="navbar navbar-dark fixed-top">
         <div class="container-fluid">
-            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <img src="\static\imagens\logo2_sem_fundo.png" alt="logo" class="img-fluid" style="height: 90px; width: auto;">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="static\imagens\icons8-música-32.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"></a>
-            <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/"><i class="fa-solid fa-house"></i> Início</a>
-                        </li>
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="/"><i class="fa-solid fa-house"></i>  Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="/resultado"><i class="fa-solid fa-square-poll-horizontal"></i>  Resultado</a>
+                    </li>
                     </ul>
                 </div>
             </div>
         </div>
     </nav>
+   
 
+    <div class="container mt-5">
+        <div id="titulos">
+                <h1 class="h1 text-center mb-2"> <i class="fa-solid fa-music"></i> Differrent Song Everyday</h1>
+                <h3 class="h3 text-center">Escolha um gênero musical e aproveite</h3 >
+        </div>
+    </div>
      
     <div id="main" class="flex-grow-1 d-flex align-items-center justify-content-center">
         <div class="container">
-            <div id="titulos">
-                <h1 class="h1 text-center mb-2"> <i class="fa-solid fa-music"></i> Differrent Song Everyday</h1>
-                <h2 class="h2 text-center">ESCOLHA UM GÊNERO MUSICAL E APROVEITE</h2>
-            </div>
             <div id="form" class="container p-4 h-100">
                     <div class="container">
-                        <h3 class="h3 text-center">O QUE É A DIFERENT SONG EVERYDAY</h3>
+                        <h3 class="h3 text-center">O que é Differrent Song Everyday ?</h3>
                         <p class="text-center mt-2 fs-5">Com base nas suas escolhas de gênero musical, o site irá selecionar e gerar 8 músicas aleatória dentro do gênero que você escolheu. 
                         Isso significa que, ao definir o seu estilo musical favorito, o sistema fará uma seleção automática e apresentará uma música que se encaixa nas suas preferências. 
                         É uma maneira de descobrir novas músicas e explorar ainda mais o seu gênero favorito de forma dinâmica!

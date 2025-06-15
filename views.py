@@ -4,9 +4,7 @@ from flask import request
 from api.api_youtube import buscarMusicaAleatoria
 from unidecode import unidecode 
 from database.access_control import retonarDataHoraLiberada
-from api.api_time_zone_db import buscarDataHoraAtual
 import redis
-from datetime import datetime
 
 todos_generos = ['rock alternativo','rock','afrobeats','arrochadeira','avant-pop','axé','black MIDI','bubblegum dance','bubu','chacarera','champeta','chillwave','cloud rap',
                 'cumbia villera','dolewave','downtempo','dream trance','eletrobrega','eurotrance','eurobeat','flamenco house','grupero','hip hop chines','idilio',
@@ -49,26 +47,7 @@ def homePage():
         data_e_hora_liberado = retonarDataHoraLiberada(endereco_ip)
         if data_e_hora_liberado:
             data_e_hora_liberado = data_e_hora_liberado.strftime("%d/%m/%Y %H:%M:%S")
-        return render_template("bloqueado.html", data_e_hora_liberado=data_e_hora_liberado)
-    
-    '''if request.method == "POST":
-        genero_musical_raw = request.form.get('txtGenero', type=str)
-        genero_musical = unidecode(genero_musical_raw).lower() if genero_musical_raw else ""   # type: ignore
-        
-        if not genero_musical or genero_musical not in todos_generos:
-            mensagem_alert = "Verifique os campos digitados por favor e tente novamente!"
-            genero_musical = None
-            
-        else:
-            try:
-                videos_ids_escolhido_aletoriamente, todos_titulos_videos  = buscarMusicaAleatoria(genero_musical, endereco_ip) 
-                videos_ids_com_titulo = zip(videos_ids_escolhido_aletoriamente, todos_titulos_videos)
-                resultado.setex(chave,10,"bloqueado") #86400
-            except Exception as e:
-                mensagem_alert = "Erro ao buscar músicas. Tente novamente mais tarde."
-                print("Erro na busca:", e)
-
-        print("Genero: ", genero_musical)  '''   
+        return render_template("bloqueado.html", data_e_hora_liberado=data_e_hora_liberado)   
         
     return render_template("index.html")
 
